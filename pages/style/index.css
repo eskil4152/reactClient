@@ -1,0 +1,22 @@
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+#app {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.tester-container {
+    text-align: center;
+    margin: 0 20vw 0 20vw;
+}
+
+.tester-container > * {
+    font-size: x-large;
+    border: 3px solid darkblue;
+}

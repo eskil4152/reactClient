@@ -1,0 +1,31 @@
+.header {
+    font-family: 'Comfortaa', cursive;
+    background-color: rgba(204, 204, 204, 0.5);
+    background-color: #646464;
+    color: white;
+    padding: 5px;
+
+    border-bottom: 2px solid black;
+}
+
+.header span {
+    display: block;
+}
+
+.headerContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#header-one {
+    text-align: left;
+    padding-top: 3px;
+    padding-left: 10px;
+    font-size: x-large;
+}
+
+#header-two {
+    text-align: right;
+    padding-right: 10px;
+}
