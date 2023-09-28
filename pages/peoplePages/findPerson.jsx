@@ -16,7 +16,9 @@ export function FindPerson() {
 
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
-    const [fullName, setFullName] = useState("");
+
+    const [fullNameFirst, setFullNameFirst] = useState("");
+    const [fullNameLast, setFullNameLast] = useState("");
 
     const [result, setResult] = useState(null);
 
@@ -30,8 +32,8 @@ export function FindPerson() {
         setResult(response);
     }
 
-    async function searchByFullName(fullName) {
-        const response = await fetchJSON(`/api/people/search/full/${fullName}`);
+    async function searchByFullName(fullNameFirst, fullNameLast) {
+        const response = await fetchJSON(`/api/people/search/full/${fullNameFirst}/${fullNameLast}`);
         setResult(response);
     }
 
@@ -45,9 +47,10 @@ export function FindPerson() {
         searchByLastName(lastName);
       }
 
-      function handleSubmitFull(e) {
+      function handleSubmitFull(e, f) {
         e.preventDefault();
-        searchByFullName(fullName);
+        f.preventDefault();
+        searchByFullName(fullNameFirst, fullNameLast);
       }
 
     return (
@@ -75,8 +78,12 @@ export function FindPerson() {
             <h4>Search by full name:</h4>
             <form onSubmit={handleSubmitFull}>
                 <input
-                    value={fullName}
-                    onChange={(e) => setFullName(e.target.value)}
+                    value={fullNameFirst}
+                    onChange={(e) => setFullNameFirst(e.target.value)}
+                />
+                <input 
+                    value={fullNameLast}
+                    onChange={(e) => setFullNameLast(e.target.value)}
                 />
                 <button type="submit">Search</button>
             </form>
