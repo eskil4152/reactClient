@@ -12,22 +12,11 @@ export function PersonCard ({ person }) {
     );
 }
 
-const firstNameContext = React.createContext({
-    async searchByFirstName( variable ) {
-      return await fetchJSON(`/api/people/search/first/${variable}`);
-    },
-  });
-
-  const lastNameContext = React.createContext({
-    async searchByLastName( variable ) {
-        return await fetchJSON(`/api/people/search/last/${variable}`)
-    },
-  });
-
 export function FindPerson() {
 
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
+    const [fullName, setFullName] = useState("");
 
     const [result, setResult] = useState(null);
 
@@ -41,6 +30,11 @@ export function FindPerson() {
         setResult(response);
     }
 
+    async function searchByFullName(fullName) {
+        const response = await fetchJSON(`/api/people/search/full/${fullName}`);
+        setResult(response);
+    }
+
     function handleSubmitFirst(e) {
         e.preventDefault();
         searchByFirstName(firstName);
@@ -49,6 +43,11 @@ export function FindPerson() {
       function handleSubmitLast(e) {
         e.preventDefault();
         searchByLastName(lastName);
+      }
+
+      function handleSubmitFull(e) {
+        e.preventDefault();
+        searchByFullName(fullName);
       }
 
     return (
@@ -69,6 +68,15 @@ export function FindPerson() {
                 <input
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
+                />
+                <button type="submit">Search</button>
+            </form>
+
+            <h4>Search by full name:</h4>
+            <form onSubmit={handleSubmitFull}>
+                <input
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
                 />
                 <button type="submit">Search</button>
             </form>
