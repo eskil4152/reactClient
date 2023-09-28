@@ -47,9 +47,8 @@ export function FindPerson() {
         searchByLastName(lastName);
       }
 
-      function handleSubmitFull(e, f) {
+      function handleSubmitFull(e) {
         e.preventDefault();
-        f.preventDefault();
         searchByFullName(fullNameFirst, fullNameLast);
       }
 
