@@ -29,16 +29,16 @@ export function FindPerson() {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
 
-    const [person, setPerson] = useState(null);
+    const [result, setResult] = useState(null);
 
     async function searchByFirstName(firstName){
         const response = await fetchJSON(`/api/people/search/first/${firstName}`)
-        setPerson(response);
+        setResult(response);
     }
 
     async function searchByLastName(lastName) {
         const response = await fetchJSON(`/api/people/search/last/${lastName}`);
-        setPerson(response);
+        setResult(response);
     }
 
     function handleSubmitFirst(e) {
@@ -75,7 +75,15 @@ export function FindPerson() {
 
             <p>Result:</p>
 
-            {person ? <PersonCard person={person} /> : <p>No results</p>}
+            {result ? (
+                Array.isArray(result) ? (
+                    result.map((person) => (
+                        <div id={person.id}>
+                            <PersonCard key={person.id} person={person} />
+                        </div>
+                    ))
+                ) : <PersonCard key={result.id} person={result} />
+            ) : <p>No results</p>}
 
         </div>
     );
