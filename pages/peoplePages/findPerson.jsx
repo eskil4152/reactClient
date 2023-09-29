@@ -35,10 +35,12 @@ export function FindPerson() {
                 setError(null)
             } else {
                 console.error("HTTP Error: " + response.status + " - " + response.statusText);
+                setResult(null);
                 setError("An error occurred while fetching data");
             }
         } catch (error) {
-            console.error("HTTP Error: " + response.status + " - " + response.statusText)
+            console.error("Error " + this.error);
+            setResult(null)
             setError("An error occured while trying to fetch data")
         }
     }
@@ -55,10 +57,12 @@ export function FindPerson() {
                 setError(null)
             } else {
                 console.error("HTTP Error: " + response.status + " - " + response.statusText);
+                setResult(null);
                 setError("An error occurred while fetching data");
             }
         } catch (error) {
-            console.error("HTTP Error: " + response.status + " - " + response.statusText)
+            console.error("Error " + this.error);
+            setResult(null);
             setError("An error occured while trying to fetch data")
         }
     }
@@ -75,10 +79,12 @@ export function FindPerson() {
                 setError(null);
             } else {
                 console.error("HTTP Error: " + response.status + " - " + response.statusText);
+                setResult(null);
                 setError("An error occurred while fetching data");
             }
         } catch (error) {
             console.error("Error " + this.error);
+            setResult(null);
             setError("An error occurred while fetching data");
         }
     }    
@@ -142,10 +148,8 @@ export function FindPerson() {
                             <PersonCard key={person.id} person={person} />
                         </div>
                     ))
-                ) : <PersonCard key={result.id} person={result} />
+                ) : <p>{error}</p>
             }
-
-            <p>{error}</p>
 
         </div>
     );
