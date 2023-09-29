@@ -5,7 +5,7 @@ export class HttpError extends Error {
     }
 }
 
-export async function fetchJSON(url) {
+/*export async function fetchJSON(url) {
     const res = await fetch("http://localhost:5000" + url);
     if (res.status === 204) {
         return null;
@@ -14,4 +14,12 @@ export async function fetchJSON(url) {
     } else {
         throw new HttpError(res.status, res.statusText);
     }
+}*/
+
+export async function fetchJSON(url) {
+    const response = await fetch("http://localhost:5000" + url);
+    const data = await response.json();
+    const status = response.status;
+
+    return { status, data };
 }

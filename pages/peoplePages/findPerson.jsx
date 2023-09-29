@@ -21,21 +21,67 @@ export function FindPerson() {
     const [fullNameLast, setFullNameLast] = useState("");
 
     const [result, setResult] = useState(null);
+    const [error, setError] = useState(null)
 
     async function searchByFirstName(firstName){
-        const response = await fetchJSON(`/api/people/search/first/${firstName}`)
-        setResult(response);
+        try {
+            const response = await fetchJSON(`/api/people/search/first/${firstName}`)
+
+            if (response.status === 404) {
+                setResult(null)
+                setError("Person not found")
+            } else if (response.status === 200) {
+                setResult(response.data);
+                setError(null)
+            } else {
+                console.error("HTTP Error: " + response.status + " - " + response.statusText);
+                setError("An error occurred while fetching data");
+            }
+        } catch (error) {
+            console.error("HTTP Error: " + response.status + " - " + response.statusText)
+            setError("An error occured while trying to fetch data")
+        }
     }
 
     async function searchByLastName(lastName) {
-        const response = await fetchJSON(`/api/people/search/last/${lastName}`);
-        setResult(response);
+        try {
+            const response = await fetchJSON(`/api/people/search/last/${lastName}`)
+
+            if (response.status === 404) {
+                setResult(null)
+                setError("Person not found")
+            } else if (response.status === 200) {
+                setResult(response.data);
+                setError(null)
+            } else {
+                console.error("HTTP Error: " + response.status + " - " + response.statusText);
+                setError("An error occurred while fetching data");
+            }
+        } catch (error) {
+            console.error("HTTP Error: " + response.status + " - " + response.statusText)
+            setError("An error occured while trying to fetch data")
+        }
     }
 
     async function searchByFullName(fullNameFirst, fullNameLast) {
-        const response = await fetchJSON(`/api/people/search/full/${fullNameFirst}/${fullNameLast}`);
-        setResult(response);
-    }
+        try {
+            const response = await fetchJSON(`/api/people/search/full/${fullNameFirst}/${fullNameLast}`);
+
+            if (response.status === 404) {
+                setResult(null)
+                setError("Person not found");
+            } else if (response.status === 200) {
+                setResult(response.data);
+                setError(null);
+            } else {
+                console.error("HTTP Error: " + response.status + " - " + response.statusText);
+                setError("An error occurred while fetching data");
+            }
+        } catch (error) {
+            console.error("Error " + this.error);
+            setError("An error occurred while fetching data");
+        }
+    }    
 
     function handleSubmitFirst(e) {
         e.preventDefault();
@@ -89,7 +135,7 @@ export function FindPerson() {
 
             <p>Result:</p>
 
-            {result ? (
+            {
                 Array.isArray(result) ? (
                     result.map((person) => (
                         <div id={person.id}>
@@ -97,7 +143,9 @@ export function FindPerson() {
                         </div>
                     ))
                 ) : <PersonCard key={result.id} person={result} />
-            ) : <p>No results</p>}
+            }
+
+            <p>{error}</p>
 
         </div>
     );
