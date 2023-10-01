@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { postJSON } from "../../tools/FetchJSON";
 
-export function Login() {
+export function Register() {
   const navigate = useNavigate();
 
   const [username, setUsername] = useState("");
@@ -10,15 +10,19 @@ export function Login() {
 
   const [error, setError] = useState(null)
 
-  async function handleLogin(username, password){
-    var result = await postJSON("/login", body = {
+  async function handleRegister(){
+
+    var result = await postJSON("/register", body = {
       username,
       password,
     });
 
-    if (result === 401)
-      setError("The username and password do not match")
-    else if (result === 200)
+
+    console.log("res" + result);
+
+    if (result.status === 409)
+      setError("The username is already registered")
+    else if (result.status === 200)
       navigate("/")
     else
       setError("Unknown error occured")
@@ -26,27 +30,22 @@ export function Login() {
 
   function handleSubmit(e){
     e.preventDefault();
-    handleLogin();
+    handleRegister();
   }
 
   return (
     <div>
-      <h1>Log In</h1>
+      <h1>Register</h1>
 
       <form onSubmit={handleSubmit}>
         <input value={username} onChange={(e) => setUsername(e.target.value)} placeholder="username"/>
         <br />
         <input value={password} onChange={(e) => setPassword(e.target.value)} placeholder="password"/>
         <br />
-        <button>Log in</button>
+        <button>Register</button>
       </form>
 
       <p style={{ color: "red" }}>{error}</p>
-
-      <br />
-
-      <Link to={"/register"}><button>Register</button></Link>
-
     </div>
   )
 }

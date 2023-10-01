@@ -8,6 +8,7 @@ import { ViewAllPeople } from "./peoplePages/allPeople";
 import { FindPerson } from "./peoplePages/findPerson";
 import { AddPerson } from "./peoplePages/addPerson";
 import { ChangePerson } from "./peoplePages/changePerson";
+import { Register } from "./login/register";
 
 export function Application() {
   return (
@@ -20,6 +21,7 @@ export function Application() {
           <Route path={"/"} element={<MainPage />} />
 
           <Route path={"/login"} element={<Login />} />
+          <Route path={"/register"} element={<Register />} />
 
           <Route path={"/all"} element={<ViewAllPeople />} />
           <Route path={"/search"} element={<FindPerson />} />
