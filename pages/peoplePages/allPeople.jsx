@@ -20,34 +20,26 @@ export function PersonCard ({ person }) {
   });
 
 export function ViewAllPeople() {
+
     const { fetchPeople } = useContext(Context);
 
     const { loading, error, data } = useLoading(async () => await fetchPeople());
 
-    if (loading) {
-        return "Loading..."
-    }
-    if (error) {
-        return (
-            <div>
-                <h1>Error</h1>
-                <p>{error.toString()}</p>
-            </div>
-        )
-    }
-
-    console.log(data);
+    if (loading)
+      return "Loading..."
+    if (error)
+      return "Error"
 
     return (
-        <div>
+      <div>
             <h1>All People</h1>
-            {
-                data.map((person) => (
-                    <div id={person.id}>
-                        <PersonCard key={person.id} person={person} />
-                    </div>
-                ))
+            { 
+              data.data.map((person) => (
+                  <div id={person.id}>
+                      <PersonCard key={person.id} person={person} />
+                  </div>
+              ))
             }
         </div>
-    );
+    )
 }
