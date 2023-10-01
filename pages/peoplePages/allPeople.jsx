@@ -30,16 +30,32 @@ export function ViewAllPeople() {
     if (error)
       return "Error"
 
-    return (
-      <div>
-            <h1>All People</h1>
-            { 
-              data.data.map((person) => (
-                  <div id={person.id}>
-                      <PersonCard key={person.id} person={person} />
-                  </div>
-              ))
-            }
+    if (data.status === 404) {
+      return (
+        <div>
+          <h1>All People</h1>
+          <p>No people found...</p>
         </div>
-    )
+      )
+    } else if (data.status === 200) {
+      return (
+        <div>
+              <h1>All People</h1>
+              {
+                data.data.map((person) => (
+                    <div id={person.id}>
+                        <PersonCard key={person.id} person={person} />
+                    </div>
+                ))
+              }
+          </div>
+      )
+    } else {
+      return (
+        <div>
+          <h1>All People</h1>
+          <p>{data.status} Unknown error occured</p>
+        </div>
+      )
+    }
 }
