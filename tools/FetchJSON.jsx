@@ -5,21 +5,29 @@ export class HttpError extends Error {
     }
 }
 
-/*export async function fetchJSON(url) {
-    const res = await fetch("http://localhost:5000" + url);
-    if (res.status === 204) {
-        return null;
-    } else if (res.ok) {
-        return await res.json();
-    } else {
-        throw new HttpError(res.status, res.statusText);
-    }
-}*/
-
 export async function fetchJSON(url) {
     const response = await fetch("http://localhost:5000" + url);
     const data = await response.json();
     const status = response.status;
 
     return { status, data };
+}
+
+export async function postJSON(url, data) {
+    try {
+        const response = await fetch("http://localhost:5000" + url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        });
+
+        const status = response.status;
+
+        return { status };
+    } catch (error) {
+        console.error("Error:", error);
+        throw error;
+    }
 }
