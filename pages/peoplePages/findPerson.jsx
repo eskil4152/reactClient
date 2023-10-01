@@ -148,7 +148,7 @@ export function FindPerson() {
                             <PersonCard key={person.id} person={person} />
                         </div>
                     ))
-                ) : <p>{error}</p>
+                ) : <p style={{ color: "red" }}>{error}</p>
             }
 
         </div>

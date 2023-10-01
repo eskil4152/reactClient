@@ -54,7 +54,7 @@ export function ViewAllPeople() {
       return (
         <div>
           <h1>All People</h1>
-          <p>{data.status} Unknown error occured</p>
+          <p style={{ color: "red" }}>{data.status} Unknown error occured</p>
         </div>
       )
     }

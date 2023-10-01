@@ -8,6 +8,12 @@ export function Header() {
           People
         </Link>
       </div>
+
+        <div id={"header-two"}>
+          <Link to={"/login"}>
+            Log in
+          </Link>
+      </div>
     </div>
   );
 }

@@ -1,7 +1,8 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import React from "react";
-import { Header } from "./header";
-import { Footer } from "./footer";
+import { Header } from "./globalPages/header";
+import { Footer } from "./globalPages/footer";
+import { Login } from "./login/login";
 import { MainPage } from "./mainPage";
 import { ViewAllPeople } from "./peoplePages/allPeople";
 import { FindPerson } from "./peoplePages/findPerson";
@@ -17,6 +18,8 @@ export function Application() {
       <main id={"main"}>
         <Routes>
           <Route path={"/"} element={<MainPage />} />
+
+          <Route path={"/login"} element={<Login />} />
 
           <Route path={"/all"} element={<ViewAllPeople />} />
           <Route path={"/search"} element={<FindPerson />} />

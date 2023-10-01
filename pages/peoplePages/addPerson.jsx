@@ -35,15 +35,20 @@ export function AddPerson() {
             <h1>Add Person</h1>
 
             <form onSubmit={handleSubmit}>
+                <br />
                 <input
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
                 />
 
+                <br />
+
                 <input
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
                 />
+
+                <br />
 
                 <input 
                     value={age}
