@@ -11,14 +11,10 @@ export function Register() {
   const [error, setError] = useState(null)
 
   async function handleRegister(){
-
     var result = await postJSON("/register", body = {
       username,
       password,
     });
-
-
-    console.log("res" + result);
 
     if (result.status === 409)
       setError("The username is already registered")

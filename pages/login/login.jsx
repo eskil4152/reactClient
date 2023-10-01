@@ -10,15 +10,15 @@ export function Login() {
 
   const [error, setError] = useState(null)
 
-  async function handleLogin(username, password){
+  async function handleLogin(){
     var result = await postJSON("/login", body = {
       username,
       password,
     });
 
-    if (result === 401)
+    if (result.status === 401)
       setError("The username and password do not match")
-    else if (result === 200)
+    else if (result.status === 200)
       navigate("/")
     else
       setError("Unknown error occured")
@@ -34,9 +34,9 @@ export function Login() {
       <h1>Log In</h1>
 
       <form onSubmit={handleSubmit}>
-        <input value={username} onChange={(e) => setUsername(e.target.value)} placeholder="username"/>
+        <input value={username} onChange={(e) => setUsername(e.target.value)} placeholder="username" />
         <br />
-        <input value={password} onChange={(e) => setPassword(e.target.value)} placeholder="password"/>
+        <input value={password} onChange={(e) => setPassword(e.target.value)} placeholder="password" />
         <br />
         <button>Log in</button>
       </form>
