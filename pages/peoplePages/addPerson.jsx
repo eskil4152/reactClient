@@ -9,6 +9,8 @@ export function AddPerson() {
     const [lastName, setLastName] = useState("");
     const [age, setAge] = useState(0);
 
+    const [error, setError] = useState(null);
+
     async function addPerson() {
         const response = await postJSON(url = "/api/people/new", body = {
             firstName,
@@ -20,8 +22,10 @@ export function AddPerson() {
     
         if (response.status === 200) {
             navigate("/");
+        } else if (response.status === 401) {
+            setError("You are not authorized to add people")
         } else {
-            console.error("Failed to add person.");
+            setError("Failed to add person.");
         }
     }
 
@@ -56,6 +60,9 @@ export function AddPerson() {
                 />
                 <button type="submit">Add</button>
             </form>
+
+            <p style={{ color:"red" }}>{error}</p>
+
         </div>
     );
 }

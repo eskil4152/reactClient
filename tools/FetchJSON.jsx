@@ -29,7 +29,7 @@ export async function postJSON(url, content) {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Beader: ${token}`
+                "Authorization": `Bearer: ${token}`
             },
             body: JSON.stringify(content)
         });
