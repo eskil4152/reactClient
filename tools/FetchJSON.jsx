@@ -6,26 +6,38 @@ export class HttpError extends Error {
 }
 
 export async function fetchJSON(url) {
-    const response = await fetch("http://localhost:5000" + url);
+    var token = localStorage.getItem("token");
+
+    const response = await fetch("http://localhost:5000" + url, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer: ${token}`
+        }
+    });
     const data = await response.json();
     const status = response.status;
 
     return { status, data };
 }
 
-export async function postJSON(url, data) {
+export async function postJSON(url, content) {
+    var token = localStorage.getItem("token");
+
     try {
         const response = await fetch("http://localhost:5000" + url, {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization": `Beader: ${token}`
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(content)
         });
 
         const status = response.status;
+        const data = await response.text();
 
-        return { status };
+        return { status, data };
     } catch (error) {
         console.error("Error:", error);
         throw error;
