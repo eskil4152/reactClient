@@ -47,6 +47,9 @@ export async function postJSON(url, content) {
         } else if (response.status === 401) {
             console.error("Unauthorized access");
             return { status, data: null };
+        } else if (response.status == 404){
+            console.error("Error: Not found")
+            return { status, data: null }
         } else {
             console.error(`Error: Received status code ${response.status}`);
             throw new Error(`HTTP Error: ${response.status} - ${response.statusText}`);
