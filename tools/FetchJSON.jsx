@@ -35,7 +35,7 @@ export async function postJSON(url, content) {
         });
 
         const status = response.status;
-        const data = await response.text();
+        const data = await response.json();
 
         return { status, data };
     } catch (error) {
