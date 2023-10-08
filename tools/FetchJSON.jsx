@@ -35,9 +35,22 @@ export async function postJSON(url, content) {
         });
 
         const status = response.status;
-        const data = await response.json();
 
-        return { status, data };
+        if (response.ok) {
+            const data = await response.json();
+            if (data !== null && data !== undefined) {
+                return { status, data };
+            } else {
+                console.error("Error: Received null or undefined data");
+                return { status, data: null };
+            }
+        } else if (response.status === 401) {
+            console.error("Unauthorized access");
+            return { status, data: null };
+        } else {
+            console.error(`Error: Received status code ${response.status}`);
+            throw new Error(`HTTP Error: ${response.status} - ${response.statusText}`);
+        }
     } catch (error) {
         console.error("Error:", error);
         throw error;
