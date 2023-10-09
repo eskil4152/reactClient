@@ -12,14 +12,17 @@ export function AddPerson() {
     const [error, setError] = useState(null);
 
     async function addPerson() {
+        if (firstName.trim() === "" || lastName.trim() === "" || isNaN(age) || age >= 0) {
+            setError("Invalid data, please enter all fields accordingly")
+            return;
+        }
+        
         const response = await postJSON(url = "/api/people/new", body = {
             firstName,
             lastName,
             age
         });
 
-        console.log("res: " + response.status)
-    
         if (response.status === 200) {
             navigate("/");
         } else if (response.status === 401) {
