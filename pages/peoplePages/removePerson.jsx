@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { postJSON } from "../../tools/FetchJSON";
-import { redirect, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export function PersonCard ({ person }) {
     const { id, firstName, lastName, age } = person;
@@ -14,8 +14,9 @@ export function PersonCard ({ person }) {
 }
 
 export function RemovePerson() {
-    const [id, setId] = useState();
+    const navigate = useNavigate();
 
+    const [id, setId] = useState();
     const [firstName, setFirstName] = useState();
     const [lastName, setLastName] = useState();
 
@@ -28,6 +29,9 @@ export function RemovePerson() {
             const { status, data } = await postJSON("/api/people/search/id", body = {
                 id
             });
+
+            console.log(data);
+            console.log(Array.isArray(data));
 
             if (status === 404) {
                 setResult(null)
@@ -54,6 +58,9 @@ export function RemovePerson() {
                 lastName
             });
 
+            console.log(data);
+            console.log(Array.isArray(data));
+
             if (status === 404) {
                 setResult(null)
                 setError("Person not found");
@@ -70,6 +77,14 @@ export function RemovePerson() {
             setResult(null);
             setError("An error occurred while fetching data");
         }
+    }
+
+    async function deletePerson(passedId){
+        await postJSON("api/people/delete", body = {
+            passedId
+        })
+
+        navigate("/")
     }
     
 
@@ -91,7 +106,6 @@ export function RemovePerson() {
             <form onSubmit={handleSubmitId}>
                 <input 
                     value={id}
-                    type="number"
                     onChange={(e) => setId(e.target.value)}
                 />
                 <button type="submit">Search</button>
@@ -116,11 +130,19 @@ export function RemovePerson() {
             
             {
                 result !== null ? (
-                    result.map((person) => (
-                        <div id={person.id}>
-                            <PersonCard key={person.id} person={person} />
-                        </div>
-                    ))
+                    Array.isArray(result) ? (
+                        result.map((person) => (
+                            <div id={person.id}>
+                                <PersonCard key={person.id} person={person} />
+                                <button onClick={() => deletePerson(person.id)}>Delete</button>
+                            </div>
+                        ))
+                    ) : (
+                        <div id={result.id}>
+                                <PersonCard key={result.id} person={result} />
+                                <button onClick={() => deletePerson(result.id)}>Delete</button>
+                            </div>
+                    )
                 ) : null
             }
             
