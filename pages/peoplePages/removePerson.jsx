@@ -90,7 +90,7 @@ export function RemovePerson() {
     async function searchByFirstName(){
         try {
             const { status, data } = await postJSON(url = "/api/people/search/first", content = {
-                firstNameSolo
+                "firstName":firstNameSolo
             });
 
             if (status === 404) {
@@ -114,7 +114,7 @@ export function RemovePerson() {
     async function searchByLastName() {
         try {
             const { status, data } = await postJSON(`/api/people/search/last`, body = {
-                lastNameSolo
+                "lastName":lastNameSolo
             })
 
             if (status === 404) {
