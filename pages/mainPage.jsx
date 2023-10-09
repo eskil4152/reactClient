@@ -27,6 +27,12 @@ export function MainPage() {
         <Link to={"/change"} style={{ color: "inherit", textDecoration: "none" }}>
           Change a person
         </Link>
+
+        <br />
+
+        <Link to={"/remove"} style={{ color: "inherit", textDecoration: "none" }}>
+          Remove a person
+        </Link>
   
       </div>
     );

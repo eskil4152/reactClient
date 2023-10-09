@@ -12,7 +12,7 @@ export function AddPerson() {
     const [error, setError] = useState(null);
 
     async function addPerson() {
-        if (firstName.trim() === "" || lastName.trim() === "" || isNaN(age) || age >= 0) {
+        if (firstName.trim() === "" || lastName.trim() === "" || isNaN(age) || age <= 0) {
             setError("Invalid data, please enter all fields accordingly")
             return;
         }

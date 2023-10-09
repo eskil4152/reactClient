@@ -9,6 +9,7 @@ import { FindPerson } from "./peoplePages/findPerson";
 import { AddPerson } from "./peoplePages/addPerson";
 import { ChangePerson } from "./peoplePages/changePerson";
 import { Register } from "./login/register";
+import { RemovePerson } from "./peoplePages/removePerson";
 
 export function Application() {
   return (
@@ -27,6 +28,7 @@ export function Application() {
           <Route path={"/search"} element={<FindPerson />} />
           <Route path={"/add"} element={<AddPerson />} />
           <Route path={"/change"} element={<ChangePerson />} />
+          <Route path={"/remove"} element={<RemovePerson />} />
 
           <Route path={"*"} element={<h1>Not found</h1>} />
         </Routes>
