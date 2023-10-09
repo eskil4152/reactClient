@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { postJSON } from "../../tools/FetchJSON";
+import { deleteJSON, postJSON } from "../../tools/FetchJSON";
 import { useNavigate } from "react-router-dom";
 
 export function PersonCard ({ person }) {
@@ -28,11 +28,21 @@ export function RemovePerson() {
     const [error, setError] = useState(null);
 
     async function deletePerson(passedId){
-        await postJSON("api/people/delete", body = {
-            passedId
-        })
+        try {
+            const response = await deleteJSON("/api/people/delete", body = {
+                "id":passedId
+            });
 
-        navigate("/")
+            if (response === 204) {
+                navigate("/")
+            } else {
+                setError("Error occured")
+            }
+        } catch (error) {
+            console.error("Error occured")
+            setResult(null)
+            setError("Error occured")
+        }
     }
 
     async function searchById() {
@@ -40,9 +50,6 @@ export function RemovePerson() {
             const { status, data } = await postJSON("/api/people/search/id", body = {
                 id
             });
-
-            console.log(data);
-            console.log(Array.isArray(data));
 
             if (status === 404) {
                 setResult(null)

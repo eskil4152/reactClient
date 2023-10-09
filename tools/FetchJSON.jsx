@@ -49,13 +49,42 @@ export async function postJSON(url, content) {
             return { status, data: null };
         } else if (response.status == 404){
             console.error("Error: Not found")
-            return { status, data: null }
+            return { status, data: null } 
         } else {
             console.error(`Error: Received status code ${response.status}`);
-            throw new Error(`HTTP Error: ${response.status} - ${response.statusText}`);
+            throw new Error(`HTTP Error: ${response.status}`);
         }
     } catch (error) {
         console.error("Error:", error);
         throw error;
+    }
+}
+
+export async function deleteJSON(url, content) {
+    var token = localStorage.getItem("token")
+
+    try {
+        const response = await fetch("http://localhost:5000" + url, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer: ${token}`
+            },
+            body: JSON.stringify(content)
+        });
+
+        const status = response.status;
+
+        if (status === 401) {
+            console.error("Unauthorized")
+            return status;
+        } else if (status === 204) {
+            console.log("Sucess")
+            return status;
+        } else {
+            console.error("Error, received code " + status)
+        }
+    } catch {
+        console.error("ERROR")
     }
 }
