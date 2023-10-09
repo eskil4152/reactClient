@@ -7,7 +7,7 @@ export function AddPerson() {
 
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
-    const [age, setAge] = useState(0);
+    const [age, setAge] = useState();
 
     const [error, setError] = useState(null);
 
@@ -45,6 +45,7 @@ export function AddPerson() {
                 <br />
                 <input
                     value={firstName}
+                    placeholder="Firstname"
                     onChange={(e) => setFirstName(e.target.value)}
                 />
 
@@ -52,6 +53,7 @@ export function AddPerson() {
 
                 <input
                     value={lastName}
+                    placeholder="Lastname"
                     onChange={(e) => setLastName(e.target.value)}
                 />
 
@@ -59,6 +61,7 @@ export function AddPerson() {
 
                 <input 
                     value={age}
+                    placeholder="Age"
                     onChange={(e) => setAge(e.target.value)}
                 />
                 <button type="submit">Add</button>

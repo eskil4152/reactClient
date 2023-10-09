@@ -19,10 +19,21 @@ export function RemovePerson() {
     const [id, setId] = useState();
     const [firstName, setFirstName] = useState();
     const [lastName, setLastName] = useState();
+    
+    const [firstNameSolo, setFirstNameSolo] = useState();
+    const [lastNameSolo, setLastNameSolo] = useState();
 
     const [ result, setResult ] = useState(null);
 
     const [error, setError] = useState(null);
+
+    async function deletePerson(passedId){
+        await postJSON("api/people/delete", body = {
+            passedId
+        })
+
+        navigate("/")
+    }
 
     async function searchById() {
         try {
@@ -58,9 +69,6 @@ export function RemovePerson() {
                 lastName
             });
 
-            console.log(data);
-            console.log(Array.isArray(data));
-
             if (status === 404) {
                 setResult(null)
                 setError("Person not found");
@@ -79,14 +87,53 @@ export function RemovePerson() {
         }
     }
 
-    async function deletePerson(passedId){
-        await postJSON("api/people/delete", body = {
-            passedId
-        })
+    async function searchByFirstName(){
+        try {
+            const { status, data } = await postJSON(url = "/api/people/search/first", content = {
+                firstNameSolo
+            });
 
-        navigate("/")
+            if (status === 404) {
+                setResult(null)
+                setError("Person not found")
+            } else if (status === 200) {
+                setResult(data);
+                setError(null)
+            } else {
+                console.error("HTTP Error: " + status);
+                setResult(null);
+                setError("An error occurred while fetching data");
+            }
+        } catch (error) {
+            console.error("Error " + this.error);
+            setResult(null)
+            setError("An error occured while trying to fetch data")
+        }
     }
-    
+
+    async function searchByLastName() {
+        try {
+            const { status, data } = await postJSON(`/api/people/search/last`, body = {
+                lastNameSolo
+            })
+
+            if (status === 404) {
+                setResult(null)
+                setError("Person not found")
+            } else if (status === 200) {
+                setResult(data);
+                setError(null)
+            } else {
+                console.error("HTTP Error: " + status);
+                setResult(null);
+                setError("An error occurred while fetching data");
+            }
+        } catch (error) {
+            console.error("Error " + this.error);
+            setResult(null);
+            setError("An error occured while trying to fetch data")
+        }
+    }
 
     function handleSubmitId(e){
         e.preventDefault();
@@ -96,6 +143,16 @@ export function RemovePerson() {
     function handleSubmitName(e){
         e.preventDefault();
         searchByName();
+    }
+
+    function handleSubmitFirstName(e){
+        e.preventDefault();
+        searchByFirstName();
+    }
+
+    function handleSubmitLastName(e){
+        e.preventDefault();
+        searchByLastName();
     }
 
     return (
@@ -111,7 +168,7 @@ export function RemovePerson() {
                 <button type="submit">Search</button>
             </form>
 
-            <h3>Search by name</h3>
+            <h3>Search by full name</h3>
             <form onSubmit={handleSubmitName}>
                 <input
                     value={firstName}
@@ -123,6 +180,28 @@ export function RemovePerson() {
                     value={lastName}
                     placeholder="Lastname"
                     onChange={(e) => setLastName(e.target.value)}
+                />
+
+                <button>Search</button>
+            </form>
+
+            <h3>Search by first name</h3>
+            <form onSubmit={handleSubmitFirstName}>
+                <input
+                    value={firstNameSolo}
+                    placeholder="Firstname"
+                    onChange={(e) => setFirstNameSolo(e.target.value)}
+                />
+
+                <button>Search</button>
+            </form>
+
+            <h3>Search by last name</h3>
+            <form onSubmit={handleSubmitLastName}>
+                <input
+                    value={lastNameSolo}
+                    placeholder="Lastname"
+                    onChange={(e) => setLastNameSolo(e.target.value)}
                 />
 
                 <button>Search</button>
@@ -139,9 +218,9 @@ export function RemovePerson() {
                         ))
                     ) : (
                         <div id={result.id}>
-                                <PersonCard key={result.id} person={result} />
-                                <button onClick={() => deletePerson(result.id)}>Delete</button>
-                            </div>
+                            <PersonCard key={result.id} person={result} />
+                            <button onClick={() => deletePerson(result.id)}>Delete</button>
+                        </div>
                     )
                 ) : null
             }
