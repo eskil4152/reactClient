@@ -8,7 +8,7 @@ export class HttpError extends Error {
 export async function fetchJSON(url) {
     var token = localStorage.getItem("token");
 
-    const response = await fetch("http://localhost:5000" + url, {
+    const response = await fetch("http://localhost:5001" + url, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -25,7 +25,7 @@ export async function postJSON(url, content) {
     var token = localStorage.getItem("token");
 
     try {
-        const response = await fetch("http://localhost:5000" + url, {
+        const response = await fetch("http://localhost:5001" + url, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -48,9 +48,12 @@ export async function postJSON(url, content) {
             console.error("Unauthorized access");
             return { status, data: null };
         } else if (response.status == 404){
-            console.error("Error: Not found")
+            console.error("Error: Not found");
             return { status, data: null } 
-        } else {
+        } else if (response.status === 409) {
+            console.error("Username already exists");
+            return { status, data: null }
+        }else {
             console.error(`Error: Received status code ${response.status}`);
             throw new Error(`HTTP Error: ${response.status}`);
         }
@@ -64,7 +67,7 @@ export async function deleteJSON(url, content) {
     var token = localStorage.getItem("token")
 
     try {
-        const response = await fetch("http://localhost:5000" + url, {
+        const response = await fetch("http://localhost:5001" + url, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",

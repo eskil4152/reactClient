@@ -16,12 +16,14 @@ export function Register() {
       password,
     });
 
-    if (result.status === 409)
+    if (result.status === 409){
       setError("The username is already registered")
-    else if (result.status === 200)
+    } else if (result.status === 200) {
+      localStorage.setItem('token', result.data)
       navigate("/")
-    else
+    } else {
       setError("Unknown error occured")
+    }
   }
 
   function handleSubmit(e){
