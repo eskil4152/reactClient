@@ -30,7 +30,7 @@ export function RemovePerson() {
     async function deletePerson(passedId){
         try {
             const response = await deleteJSON("/api/people/delete", body = {
-                "id":passedId
+                "id":`${passedId}`
             });
 
             if (response === 204) {

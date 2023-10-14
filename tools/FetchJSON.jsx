@@ -37,6 +37,7 @@ export async function postJSON(url, content) {
         const status = response.status;
 
         const contentType = response.headers.get("content-type")
+        
         const isJsonResponse = contentType && contentType.includes("application/json")
         const isTextResponse = contentType && contentType.includes("text/plain")
 
@@ -88,7 +89,7 @@ export async function deleteJSON(url, content) {
             console.error("Unauthorized")
             return status;
         } else if (status === 204) {
-            console.log("Sucess")
+            console.log("Success")
             return status;
         } else {
             console.error("Error, received code " + status)
