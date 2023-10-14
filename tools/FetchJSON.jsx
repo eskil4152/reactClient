@@ -46,7 +46,7 @@ export async function postJSON(url, content) {
                 return {status, data}
             } else if (isTextResponse) {
                 const token = await response.text();
-                return { status, data }
+                return { status, token }
             } else {
                 return { status }
             }            

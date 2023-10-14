@@ -19,7 +19,7 @@ export function Login() {
     if (result.status === 401) {
       setError("The username and password do not match")
     } else if (result.status === 200) {
-      localStorage.setItem('token', result.data)
+      localStorage.setItem('token', result.token)
       navigate("/")
     } else {
       setError("Unknown error occured")

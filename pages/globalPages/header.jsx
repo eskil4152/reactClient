@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 
 export function Header() {
+  var token = localStorage.getItem("token")
+
   return (
     <div className={"headerContainer"}>
       <div id={"header-one"}>
@@ -10,9 +12,13 @@ export function Header() {
       </div>
 
         <div id={"header-two"}>
-          <Link to={"/login"}>
-            Log in
-          </Link>
+          {
+            token == null ? (
+              <Link to={"/login"}>
+                Log in
+              </Link>
+            ) : "Logged In"
+          }
       </div>
     </div>
   );
