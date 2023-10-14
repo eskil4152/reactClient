@@ -36,14 +36,20 @@ export async function postJSON(url, content) {
 
         const status = response.status;
 
+        const contentType = response.headers.get("content-type")
+        const isJsonResponse = contentType && contentType.includes("application/json")
+        const isTextResponse = contentType && contentType.includes("text/plain")
+
         if (response.ok) {
-            const data = await response.json();
-            if (data !== null && data !== undefined) {
-                return { status, data };
+            if (isJsonResponse){
+                const data = await response.json();
+                return {status, data}
+            } else if (isTextResponse) {
+                const token = await response.text();
+                return { status, data }
             } else {
-                console.error("Error: Received null or undefined data");
-                return { status, data: null };
-            }
+                return { status }
+            }            
         } else if (response.status === 401) {
             console.error("Unauthorized access");
             return { status, data: null };
@@ -51,9 +57,9 @@ export async function postJSON(url, content) {
             console.error("Error: Not found");
             return { status, data: null } 
         } else if (response.status === 409) {
-            console.error("Username already exists");
+            console.error("Username already registered");
             return { status, data: null }
-        }else {
+        } else {
             console.error(`Error: Received status code ${response.status}`);
             throw new Error(`HTTP Error: ${response.status}`);
         }

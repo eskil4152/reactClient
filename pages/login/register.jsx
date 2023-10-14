@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { postJSON } from "../../tools/FetchJSON";
+import { postJSON, postLogin } from "../../tools/FetchJSON";
 
 export function Register() {
   const navigate = useNavigate();

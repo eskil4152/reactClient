@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, json, useNavigate } from "react-router-dom";
-import { postJSON } from "../../tools/FetchJSON";
+import { postJSON, postLogin } from "../../tools/FetchJSON";
 
 export function Login() {
   const navigate = useNavigate();
@@ -19,8 +19,8 @@ export function Login() {
     if (result.status === 401) {
       setError("The username and password do not match")
     } else if (result.status === 200) {
-      navigate("/")
       localStorage.setItem('token', result.data)
+      navigate("/")
     } else {
       setError("Unknown error occured")
     }
